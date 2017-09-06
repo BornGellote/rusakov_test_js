@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Таймеры</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript">
+		function timer() {
+			var s = Number(document.getElementById("timer").innerHTML);
+			s++;
+			//for ( var i = 0; i <= 60; i++){
+			//i++;
+			//}
+			if (s < 10) 
+				document.getElementById("timer").innerHTML = "0" + s;
+			else 	
+				document.getElementById("timer").innerHTML = s;
+			setTimeout("timer()", 1000);
+		}
+		
+		function timer_minuts(){
+		    var m = Number(document.getElementById("minuts").innerHTML);
+			m++;
+			if( m < 10 )
+				document.getElementById("minuts").innerHTML = "0" + m; 				
+			else 
+				document.getElementById("minuts").innerHTML = m; 				
+			setTimeout("timer_minuts()", 61000);
+		}
+	</script>
+	<script language = 'javascript'>
+	  function startTime() {
+		var date = new Date();
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var seconds = date.getSeconds();
+		if (hours < 10) hours = "0" + hours;
+		if (minutes < 10) minutes = "0" + minutes;
+		if (seconds < 10) seconds = "0" + seconds;
+		document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds;
+		setTimeout(startTime, 1000);
+	  }
+	</script>
+	
+</head>
+<body onload="startTime(), timer(), timer_minuts()">
+	<script type="text/javascript">
+		//var id = setInterval("myFunc1()", 1000);
+		var counter_1 = 0;
+		function myFunc1() {
+			counter_1++;
+			alert("Прошло секунд: " + counter_1);
+			if (counter_1 == 5) clearInterval(id);
+		}
+		
+		var counter_2 = 0;
+		function myFunc2() {
+			counter_2++;
+			alert("Прошло секунд: " + counter_2);
+			if (counter_2 < 5) setTimeout("myFunc2()", 1000);
+		}
+		//myFunc2();
+	</script>
+	Прошло <span id="minuts">-1</span> : <span id = "timer">-1</span>.
+	</br>
+	<b>Время на сайте: <span id="time"></span></b>
+	</br>
+	<a href="index.html"> Back in homepage </a>
+
+</body>
+</html>

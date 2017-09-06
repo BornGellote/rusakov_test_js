@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ru" >
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JS</title>
+    <link rel="stylesheet" href="assets/countdown/jquery.countdown.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link href="css/style.css" rel="stylesheet">
+	<script type="text/javascript">
+		function handlerClick(button){
+			alert("Hello " + button.name + " World " + button.value);
+		}
+		var cont = 0;
+		function handlerMouseOver(element){
+			cont++;
+			element.innerHTML = "Move Mouse" + cont;
+		}
+		
+		function MyhandlerMouseOver(element){
+			element.style.width='100%';
+		}
+		
+		function MyhandlerMouseOut(element){
+			element.style.width='100px';
+		}
+		
+		function MyhandlerMouseClick(element){
+			cont++;
+			if(cont % 2)
+				element.style.width='100%';
+			else element.style.width='100px';
+		}
+		
+	</script>
+	
+	<script type="text/javascript">
+	//DOM (Document Objct Model)
+		var action = 0;
+		var links =false;
+		function parseDocument(){
+			var nodelist = document.getElementById("menu").childNodes;
+			links = new Array();
+			var k = 0;
+			for ( var i = 0; i < nodelist.length; i++) {
+				 if(nodelist[i] instanceof HTMLLIElement) {
+				 	var li = nodelist[i].childNodes;
+					for ( var j = 0; j < li.length; j++) {
+						if(li[j] instanceof HTMLAnchorElement) {
+							links[k] = li[j];
+							k++;
+						}
+					}
+				 }
+			}
+			alert(links[0]);	
+		}
+		
+	  </script>
+  </head>
+<body>
+<!--<body onload="alert('Page load')">-->
+	</br>
+	</br>
+	<div id="countdown"></div>
+<!--	<p id="note"></p>-->
+<!--	<p>Этот сайт существует уже: <span id="life_site" style="color: #0a0; font-size: 120%; font-weight: bold;"></span></p>-->
+	</br>
+	</br>
+	<center><div class="time"></div></center>
+	</br>
+	</br>
+	<script type="text/javascript">
+	document.write("<center><b>Timer</b></center>"); 
+	 var id_timer = setInterval("myFuncTimer()", 1000);
+	 var cont_sec = 0
+	 function myFuncTimer(){
+		cont_sec++;
+		alert("Second ago: " + cont_sec);
+		if (cont_sec == 1) clearInterval(id_timer);
+	 }
+	
+	var count_sec = 0;
+	function myFuncTimer2(){
+		cont_sec++;
+		alert("Second ago: " + cont_sec);
+		if (cont_sec < 5) seTimeout("myFuncTimer2", 1000);
+	 }
+	 //myFuncTimer2();
+	 </script>
+	 <a href="timer.html"> Timer </a>
+	 <a href="dom.html">DOM </a>
+	</br>
+	</br>
+	 <form method="post" action="" onsubmit="return TestLogin1(this.login.value);">
+		Логин: <input type="text" name="login">
+	 </form>
+
+	 <script type="text/javascript">
+		//Я бы не советовал делать проверку поля логина одним регулярным выражением.
+		// Лучше разбить на несколько маленьких условий.
+		function TestLogin1(login){
+
+		if(/^[a-zA-Z1-9]+$/.test(login) === false)
+			{alert('В логине должны быть только латинские буквы'); return false;}
+		if(login.length < 4 || login.length > 20)
+			{ alert('В логине должен быть от 4 до 20 символов'); return false;}
+		if(parseInt(login.substr(0, 1)))
+			{alert('Логине должен начинаться с буквы'); return false;}
+
+		 return true;
+		}
+
+		//Так просто можно сделать более информативные сообщения об ошибках.
+
+		//Но если хочется всё в одном условии.
+
+		/*function TestLogin1(login){
+		if(/^[a-zA-z]{1}[a-zA-Z1-9]{3,20}$/.test(login) === false)
+			{alert('Не верный логин'); return false;}
+
+		 return true;
+		}*/
+	 </script>
+	 </br>
+	 </br>
+	<script type="text/javascript">
+	document.write("<center><b>Регулярные выражения</b></center>"); 
+	/*Регулярные выражения:
+	 - http://myrusakov.ru/php-regexp-meta.html
+	 - http://myrusakov.ru/php-regexp-quantifier.html
+	 - http://myrusakov.ru/php-regexp-symbol.html
+	 - http://myrusakov.ru/php-regexp-mod.html
+	 */
+	 var str_reg = "Some string";
+	 if(str_reg.match(/r+/i)) document.write("Find r </br></br>");
+	 else document.write("Not find r </br></br>");
+	 
+	 function checkFormReg(form){
+		var email = form.check_email.value;
+		var login = form.check_login.value;
+		var l = login.match(/^(\w+){3,32}$/);/*(/^[a-zA-Z][0-9]+$/i);*/
+		var m = email.match(/^[a-z0-9][a-z0-9\._-]*[a-z0-9]*@([a-z0-9]+([a-z0-9-]*[a-z0-9]+)*\.)+[a-z]+$/i);
+		if ((!l) && (!m)){
+			alert("Login and E-mail do not corect");
+			return false;
+		}
+		if (!l){
+			alert("Login do not corect");
+			return false;
+		}
+		if (!m){
+			alert("E-mail do not corect");
+			return false;
+		}
+		return true;
+	 }
+	 </script>
+	 
+	 
+	 <form name="check_form" action="http://yandex.ru" method="post" onsubmit="return checkFormReg(this)">
+		<p>
+			Login:	<input type="text" name="check_login" />
+		</p>
+		<p>
+			E-mail:	<input type="text" name="check_email" />
+		</p>
+		<p>
+			<input type="submit" value="SEND" />
+			<input type="reset" value="Cancel" onreset="return confirm('Очистить форму?')"/>
+		</p>
+	 </form>
+	 </br>
+	 </br>
+	<form name="form" action="#" method="post" onsubmit="return checkForm(this)">
+		<div>
+			<label> Login: </label>
+			<input type="text" name="login" />
+			<br/>
+			<br/>
+			<label> Password: </label>
+			<input type="password" name="password" />			
+			<br/>
+			<br/>
+			<input type="submit" value="Send">
+		</div>
+	</form>
+	</br>
+	</br>
+	<script>
+	document.write("<center><b>AJAX</b></center>"); 
+	</script>
+<!--	<input type="text" name="login_ajax" onblur="checkLogin(this.value)" />-->
+	</br>
+	</br>
+	
+	<input type="button" name="b" value="Click Me" onclick="handlerClick(this)"/>
+	</br>
+	</br>
+	<span onmouseover="handlerMouseOver(this)">Move Mouse 0 </span>
+	</br>
+	</br>
+	<img src="img/icon.jpg" class="img_over" onmouseover="MyhandlerMouseOver(this)"  onMouseOut="MyhandlerMouseOut(this)"> 
+	<img src="img/icon.jpg" class="img_over" onclick="MyhandlerMouseClick(this)">
+	</br>
+	</br>
+	<!--Jquery-->
+	<div class="block">	
+		<h1>Block</h1>
+		<p>Content one</p>
+		<p>Content two</p>
+		<p>Content three</p>
+	</div>
+	<div class="block">	
+		<h1>Block</h1>
+		<p>Content one</p>
+		<p>Content two</p>
+	</div>
+	<div class="block">	
+		<h1>Block</h1>
+		<p>Content one</p>
+		<p>Content two</p>
+		<p>Content three</p>
+		<p>Content four</p>
+	</div>
+	<div class="block">	
+		<h1>Block</h1>
+		<p>Content one</p>
+	</div>
+	
+<!--
+	<ul id="menu">
+		<li><a href="#">Link 1</a></li>
+		<li><a href="#">Link 2</a></li>
+		<li><a href="#">Link 3</a></li>
+		<li><a href="#">Link 4</a></li>
+		<li><a href="#">Link 5</a></li>
+	</ul>
+-->
+	
+	<!--AJAX-->
+	</br>
+	</br>
+	<div>
+		<label> Login: </label>
+		<input type="text" name="log_name"  id="name" />
+		<br/>
+		<br/>
+	</div>
+	<div>
+		<input type="button" value="Send" id="check_login" />
+	</div>
+	</br>
+	</br>
+	
+	<!--15-->
+	<div id="box"></div>
+	<button id="reset">New game</button>
+	
+  <script type="text/javascript">
+     document.write("<center><b>LESSON 1</b></center>"); 
+	 //LESSON 1
+	 var integ = 1;
+	 var doubl = 1.2;
+	 var str = "Hello World";
+	 var bool = false;
+	 var my_name = "Artem";
+	 var man = true;
+	 var not_man = false;
+	 var res = (5 + 7)/((12 - 5.5)*(5 - 8 * 12));
+	 var res_x = 5;
+	 var res_y = 7;
+	 var res_x_y = (res_x + res_y)/((12 - 5.5)*(res_x - 8 * 12));
+	 var str_17 = "17";
+	 var str_5 = "-5";
+	 var sum_srt = str_17 + str_5;
+	 var sum_srt_num = Number(str_17) + Number(str_5);
+	 var dif_srt = str_17 - str_5;
+	 var dif_srt_num = Number(str_17) - Number(str_5);
+	 document.write("</br></br>Hello World</br>");
+	 document.write("My name is " + my_name + "</br>");
+	 document.write("I'm a man? " + man + "</br>");
+	 document.write("(5 + 7)/((12 - 5.5)*(5 - 8 * 12)) = " + res + "</br>");
+	 document.write("(res_x + res_y)/((12 - 5.5)*(res_x - 8 * 12)) = " + res_x_y + "</br>");
+	 document.write("str_17 + str_5 = " + sum_srt + "</br>");
+	 document.write("num(str_17) + num(str_5) = " + sum_srt_num + "</br>");
+	 document.write("str_17 - str_5 = " + dif_srt + "</br>");
+	 document.write("num(str_17) - num(str_5) = " + dif_srt_num + "</br>");
+	 document.write("integ = " + integ + "</br>"); 
+	 document.write("doubl = " + doubl + "</br>"); 
+	 document.write("str = " + str + "</br>"); 
+	 document.write("bool = " + bool + "</br>"); 
+	 //alert(integ);
+	 
+	/* Логические операции */
+	document.write("<center><b>Логические операции</b></center>"); 
+	var b = x > y;
+	document.write("<br />");
+	document.write(x + " > " + y + " = " + b);
+	var b = x < y;
+	document.write("<br />");
+	document.write(x + " < " + y + " = " + b);
+	
+	document.write("<table style='text-align: center;' border='1'><tr><td>B1</td><td>B2</td><td>Отрицание B1</td><td>B1 И B2</td><td>B1 ИЛИ B2</td><td>B1 ИСКЛЮЧАЮЩЕЕ ИЛИ B2</td></tr>");
+	var b_1 = false;
+	var b_2 = false;
+	document.write("<tr><td>" + b_1 + "</td><td>" + b_2 + "</td><td>" + (!b_1)+ "</td><td>" + (b_1 && b_2) +"</td><td>" + (b_1 || b_2) +"</td><td>" + (b_1 ^ b_2) +"</td></tr>");
+	var b_1 = false;
+	var b_2 = true;
+	document.write("<tr><td>" + b_1 + "</td><td>" + b_2 + "</td><td>" + (!b_1)+ "</td><td>" + (b_1 && b_2) +"</td><td>" + (b_1 || b_2) +"</td><td>" + (b_1 ^ b_2) +"</td></tr>");
+	var b_1 = true;
+	var b_2 = false;
+	document.write("<tr><td>" + b_1 + "</td><td>" + b_2 + "</td><td>" + (!b_1)+ "</td><td>" + (b_1 && b_2) +"</td><td>" + (b_1 || b_2) +"</td><td>" + (b_1 ^ b_2) +"</td></tr>");
+	var b_1 = true;
+	var b_2 = true;
+	document.write("<tr><td>" + b_1 + "</td><td>" + b_2 + "</td><td>" + (!b_1)+ "</td><td>" + (b_1 && b_2) +"</td><td>" + (b_1 || b_2) +"</td><td>" + (b_1 ^ b_2) +"</td></tr>");
+	document.write("</table>");
+	 for (var i = 0; i < 10; i++) document.write("Hello World </br>");
+	 
+	 for (var i = 0; i < 100; i++) {
+		if (i != 0 && i % 10 == 0) {
+			document.write("Hello World " + i + ", ");
+		}
+	 }
+	 
+	 var x = 2;
+	 var sum = 0;
+	 document.write("</br>");
+	 while (x <= 10){
+		//sum = sum + x;
+		sum += x;
+		x++;
+		document.write("sum = " +  sum + ", ");
+	 }
+
+	//УСЛОВНЫЕ ОПЕРАТОРЫ
+	document.write("<br /><center><b>УСЛОВНЫЕ ОПЕРАТОРЫ</b></center><br />"); 
+	var tires = 3;
+	if (tires == 0) document.write("<br /> Wheels not <br />");
+	else document.write("<br /> Wheels is have <br />");
+	
+	
+	if (tires == 0 ) document.write("Wheels not <br />");
+	else {
+		if (tires < 4 ) document.write("Wheels not full conplect <br />");
+		else document.write("Wheels is have full complect <br />");
+	}	 
+	switch(tires) {
+		case 0:
+			document.write("Wheels not <br />");
+			break;
+		case 1:
+			document.write("Wheels is have 1 wheel <br />");
+			break;			
+		case 2:
+			document.write("Wheels is have 2 wheel <br />");
+			break;
+		case 3:
+			document.write("Wheels is have 3 wheel <br />");
+			break;
+		case 4:
+			document.write("Wheels is have 4 wheel <br />");
+			break;
+		default: document.write("Wheels is have so much <br />");
+	}
+	
+	if ( man ) document.write("I'm a man <br />");
+	else document.write("I'm not a man <br />");
+	
+	var age = 28;
+	if ( age <= 18) document.write("I'm a boy <br />");
+	else if ((age > 18 ) && (age <= 30))document.write("I'm a young <br />");
+	else if ((age > 30 ) && (age <= 50))document.write("I'm a man <br />");
+	else if ((age > 50 ) && (age <= 80))document.write("I'm adult <br />");
+	else if ((age > 80 ))document.write("I'm old <br />");
+	
+	for (var i = 0; i < 10; i++) {
+		if ((i % 3 == 0) && (i != 0)) continue;
+		if ( i == 8) break;
+		document.write(i + ", "); 
+	}
+	
+	//TABLE *
+	document.write("<br /><center><b>Table *</b></center><br />"); 
+	var table, row, cell, i, j;
+	table = document.createElement('table');
+	table.style.textAlign = 'right';
+	table.style.fontFamily = 'monospace';
+	for (i=1; i<10; i++) {
+		row = document.createElement('tr');
+		for (j=1; j<10; j++) {
+			cell = document.createElement(i == 1 || j == 1 ? 'th' : 'td');
+			cell.appendChild(document.createTextNode(i*j));
+			cell.style.padding = '4px';
+			cell.style.width = 100 / 9 + '%';
+			row.appendChild(cell);
+		}
+		table.appendChild(row);
+	}
+	document.body.appendChild(table);
+	
+	//Alert, Confirm, Promt
+	//document.write("<br /><center><b>Alert</b></center><br />"); 
+	/*var conf = "people";
+	alert("Hello, " + conf);
+	
+	if (confirm("Are you sure")) alert("Are you sure");
+	else alert("I'm not sure");
+	
+	var x = Number(prompt("Enter x"));
+	if ( x != 0 ){ 
+		var y = Number(prompt("Enter y"));
+		if ( y != 0 ){
+			var z = Number(prompt("Enter z"));
+			if ( z != 0 ){
+				alert("Sum " + x + " and " + y + " and " + z + " = " + (x +y + z));
+			}
+			else{ 
+				var z = Number(prompt("Errore, please enter z != 0. Enter z"));
+				if ( z != 0 ){
+					alert("Sum " + x + " and " + y + " and " + z + " = " + (x +y + z));
+				}
+			}
+		}
+		else{ 
+			var y = Number(prompt("Errore, please enter y != 0. Enter y"));
+			if ( y != 0 ){
+				var z = Number(prompt("Enter z"));
+				if ( z != 0 ){
+					alert("Sum " + x + " and " + y + " and " + z + " = " + (x +y + z));
+				}
+				else{ 
+					var y = Number(prompt("Errore, please enter z != 0. Enter y"));
+					alert("Sum " + x + " and " + y + " = " + (x + y));
+				}
+			}
+		}
+	}
+	else{ 
+		alert("Error!");
+	*/
+	
+	//ARRAY
+	document.write("<br /><center><b>ARRAY</b></center><br />"); 
+	var arr = new Array(-5, 4, 4.5, "str", false);
+	for (var i = 0; i < arr.length; i++) 
+		document.write("Element with index " + i + " = " + arr[i] + "<br />");
+		
+	arr = new Array();
+	var k = 0;
+	for (var i = 0; i < 10; i++)
+		for (var j = 0; j < 5; j++){
+			arr[k] = i * j;
+			k++;
+		}
+		document.write ("<br / >");
+		var sum = 0;
+		for (var i = 0; i < arr.length; i++){
+			document.write (arr[i] + " ");
+			sum += arr[i];
+		}
+		document.write ("<br / >" + sum + "<br />");	
+		document.write ("Center arf " + (sum / arr.length) + "<br /><br />");	
+		
+	var new_arr = new Array (1, 3, 5, 6, 7, 8, 8, 3, 4, 5);	
+	for (var i = 0; i < new_arr.length; i++) 
+		document.write("Element with index new_arr " + i + " = " + new_arr[i] + "<br />");
+		
+	var revers_new_arr = new_arr.reverse();
+	for (var i = 0; i < revers_new_arr.length; i++) 
+		document.write("Element with index revers_new_arr " + i + " = " + revers_new_arr[i] + "<br />");
+	
+	/*var revers_arr = [];
+	for (var i = 0; i < new_arr.length; i++){ 
+		var n = new_arr.length;
+		var indx = n - i;
+		revers_arr[i] = new_arr[indx];
+		document.write("Element with index revers_arr " + i + " = " + revers_arr[i] + "<br />");
+	}*/
+		
+	//TWO ARRAY 
+	document.write("<br /><center><b>TWO ARRAY</b></center><br />");	
+	var arr_1 = new Array();
+	var arr_2 = new Array();
+	var arr_3 = new Array();
+		for (var i = 0; i < 5; i++) arr_1[i] = i;
+		for (var i = 0; i < 10; i++) arr_2[i] = i * 2;
+		for (var i = 0; i < 15; i++) arr_3[i] = i * 3;
+	var all_arr = new Array(arr_1, arr_2, arr_3);
+		for (var i = 0; i < all_arr.length; i++){
+			for (var j = 0; j < all_arr[i].length; j++)
+				document.write(all_arr[i][j] + " ");
+			 document.write("<br/>");
+		}
+	
+	var my_arr_1 = new Array(1,2,3);
+	var my_arr_2 = new Array(1,2,3);
+	var my_arr_3 = new Array(1,2,3);
+		document.write("<center><table style='text-align: center; width: 250px; height: 250px;' border='1'><tr><td>" + my_arr_1[0] + "</td><td>" + my_arr_1[1] + "</td><td>" + my_arr_1[2] + "</td></tr>");
+		document.write("<tr><td>" + my_arr_2[0] + "</td><td>" + my_arr_2[1] + "</td><td>" + my_arr_2[2] + "</td></tr>");
+		document.write("<tr><td>" + my_arr_3[0] + "</td><td>" + my_arr_3[1] + "</td><td>" + my_arr_3[2] + "</td></tr>");
+		document.write("</table></center>");
+		
+	var my_all_arr = new Array(my_arr_1, my_arr_2, my_arr_3);	
+		my_all_arr[0][0] = 1;
+		my_all_arr[0][1] = 0;
+		my_all_arr[0][2] = 0;
+		my_all_arr[1][0] = 0;
+		my_all_arr[1][1] = 1;
+		my_all_arr[1][2] = 0;
+		my_all_arr[2][0] = 0;
+		my_all_arr[2][1] = 0;
+		my_all_arr[2][2] = 1;
+	document.write("<br /><center><b>TABLE ONE [0]</b></center><br />");
+		document.write("<center><table style='text-align: center; width: 250px; height: 250px;' border='1'><tr><td>" + my_all_arr[0][0] +"</td><td>" + my_all_arr[0][1] +"</td><td>" + my_all_arr[0][2] + "</td></tr>");
+		document.write("<tr><td>" + my_all_arr[1][0] + "</td><td>" + my_all_arr[1][1] + "</td><td>" + my_all_arr[1][2] + "</td></tr>");
+		document.write("<tr><td>" + my_all_arr[2][0] + "</td><td>" + my_all_arr[2][1] + "</td><td>" + my_all_arr[2][2] + "</td></tr>");
+		document.write("</table></center>");
+	
+	document.write("<br /><center><b>TABLE TWO [0](for)</b></center><br />");
+		document.write("<center><table style='text-align: center; width: 250px; height: 250px;' border='1'>");
+		for (var i = 0; i < my_all_arr.length; i++){
+			document.write("<tr>");
+				for (var j = 0; j < my_all_arr[i].length; j++){
+						if( i == j ) my_all_arr[i][j] = 1;
+						else my_all_arr[i][j] = 0;
+					document.write("<td>" + my_all_arr[i][j] + "</td>");
+				}
+			document.write("</tr>");
+		}
+		document.write("</table></center>");
+	
+	 //FUNCTION
+	 document.write("<br /><center><b>FUNCTION</b></center><br />"); 
+	 function summa(a, b) {
+		return a + b;
+	 }
+	 
+	 function print(str) {
+		document.write(str + "</br>");
+	 }
+	 var result = summa(5,7)
+	 var y = 10;
+	 //alert(summa(5,7));
+	 print("abc");
+	 //alert(result);
+	 var x_y = summa(x, y);
+	 print(x_y);
+	 
+	 //FORM
+	 function checkForm(form){
+		var login = form.login.value;
+		var password = form.password.value;
+		//alert(login);
+		var bad = "";
+		if (login == "") bad +="You not write Login \n"
+		else if (login.length < 4) bad +="Login != 4\n"
+		if (password == "") bad +="You not write Password \n"
+		else if (login.length < 6) bad +="Password != 6\n"
+		if (bad != ""){
+			alert(bad);
+			return false;
+		}
+		return true
+	 }
+	 
+	 function print_my(text){
+		document.write("<b>" + text + "</b></br>");
+	 }	
+	 print_my("Hello");
+	 
+	 function sum_two(x, y, r){
+		if(r) return x + y;
+		else print_my(x + y);
+	 }
+	 //var suma = sum_two(5, 7, true);
+	 //alert(suma);
+	 sum_two(5, 7, false);
+	 
+	 function custom_arr(array){
+		document.write("<br /><center><b>TABLE FUNCTION</b></center><br />");
+			document.write("<center><table style='text-align: center; width: 250px; height: 250px;' border='1'>");
+			for (var i = 0; i < array.length; i++){
+				document.write("<tr>");
+					for (var j = 0; j < array[i].length; j++){
+						document.write("<td>" + array[i][j] + "</td>");
+					}
+				document.write("</tr>");
+			}
+		document.write("</table></center>");
+	 }
+	 
+	 var my_cust_arr_1 = new Array(1,2,3);
+	 var my_cust_arr_2 = new Array(1,2,3);
+	 var my_cust_arr_3 = new Array(1,2,3);
+	 var my_all_cust_arr = new Array(my_cust_arr_1, my_cust_arr_2, my_cust_arr_3);	
+	 custom_arr(my_all_cust_arr);
+	 
+	 function sum_array(array){
+		var ar = 0;
+		for (var i = 0; i < array.length; i++){
+			ar = ar + array[i];
+		}
+		return ar;
+	 }
+	 
+	 var my_sum_arr = new Array(4,5,6,7);
+	 var summa_array = sum_array(my_sum_arr);
+	 print_my(summa_array);
+	 //alert(summa_array);
+	 
+	  //FUNCTION MATH
+	  document.write("<center><b>Mathematics function</b></center>"); 
+	  var pi_const = "Number Pi = " + Math.PI; //число Пи  - свойство
+	  pi_const +="\nNumber E = " + Math.E; // Число Е - свойство
+	  pi_const += "\nModul -7 = " + Math.abs(-7); //Модуль числа - abs метод().
+	  pi_const += "\nSin 0.3 = " + Math.sin(0.3); //Модуль числа - abs метод().
+	  pi_const += "\nRandom = " + Math.random(); //Модуль числа - abs метод().
+	  pi_const += "\nRandom 0 from 10 = " + Math.floor(Math.random() * 11); //Модуль числа - abs метод().
+	  var floore = Math.floor(5.3);
+	  var ceile = Math.ceil(5.6);
+	  alert(pi_const);
+	  console.log (floore);
+	  console.log (ceile);
+	  //FUNCTION Date and Time
+	  document.write("<center><b>Date and Time function</b></center>"); 
+	  var date = new Date();
+	  var text_date = "Year" + date.getFullYear();
+	  text_date += "\nMonth" + date.getMonth();
+	  text_date += "\nDate" + date.getDate();
+	  text_date += "\nHours" + date.getHours();
+	  text_date += "\nMinutes" + date.getMinutes();
+	  text_date += "\nSecond" + date.getSeconds();
+	  text_date += "\nDate" + date;
+	  alert(text_date);
+	  
+	  date = new Date (1989, 0, 12, 0, 5, 0)
+	  date.setSeconds(7);
+	  date.toString = function(){
+	  	var year = this.getFullYear();
+	  	var month = this.getMonth() + 1;
+	  	var day = this.getDate();
+		if ( month < 10 ) month = "0" + month;
+		if ( month < 10 ) day = "0" + day;
+		return year + "." + month + "." + day;
+	  }
+	  
+	  var text_date = "Year" + date.getFullYear();
+	  text_date += "\nMonth" + date.getMonth();
+	  text_date += "\nDate" + date.getDate();
+	  text_date += "\nHours" + date.getHours();
+	  text_date += "\nMinutes" + date.getMinutes();
+	  text_date += "\nSecond" + date.getSeconds();
+	  text_date += "\nDate" + date;
+	  alert(text_date);
+	  
+	  //FUNCTION Array
+	  document.write("<center><b>Array function</b></center>"); 
+	  
+	  var arr_new = new Array(12,6,-7,3,4,-7,0);
+	  var arr_text = "Leght arr_new" + arr_new.length;
+	  arr_text += "\n Array to string" + arr_new.join(',');
+	  
+	  arr_text +="\n Sort array" + (arr_new.sort()).join(',');
+	  arr_text +="\n Sort array" + (arr_new.sort(mySort)).join(',');
+	  function mySort(a,b){
+	  	if ( a > b ) return -1;
+		else if ( a == b) return 0;
+		else return 1;
+	  }
+	  alert("FunctionArray: " + arr_text);
+	  
+	  //FUNCTION String
+	  document.write("<center><b>String function</b></center>"); 
+	  
+	  var str_new = "String new";
+	  var str_text = "Length string" + str_new.length;
+	  
+	  str_text +="\n String down registr " + str_new.toLowerCase();
+	  str_text +="\n String Up registr " + str_new.toUpperCase();
+	  str_text +="\n SubString in 1 from 5 element " + str_new.substring(0, 5);
+	  str_text += "\n 3 symbol " + str_new.charAt(2);
+	  str_text += "\n Substring  'new' start in the index " + str_new.indexOf("new");
+	  str_text += "\n Substring  'error' start in the index " + str_new.indexOf("error");
+	  
+	  alert("\n Function String: " + str_text);
+	  
+	   //DOM (Document Objct Model)
+	  document.write("<center><b>Document Objct Model</b></center>"); 
+	  
+	 //GLOBAL and LOCAL
+	 document.write("<br /><center><b>GLOBAL and LOCAL</b></center><br />");
+	 var global = 15;
+	 var l = 10;
+	 function myFunc(){
+		var l = 5;
+		global++;
+		l++;
+		//print_my(global);
+		//print_my(l);
+	 }
+	 document.write("for global = " + global + ", for l = " + l + "<br />");
+	 myFunc();
+	 document.write("for global = " + global + ", for l = " + l + "<br />");
+	 
+	 var counter = 0;
+     function mycustomFunc(){
+		counter++;
+			//if( counter < 10 ) mycustomFunc();
+//		print_my(counter);
+	 }
+	 
+	 function alertFunc(){
+		alert(counter);
+	 }
+	 
+	 mycustomFunc();
+	 mycustomFunc();
+	 mycustomFunc();
+	 mycustomFunc();
+	 mycustomFunc();
+	alertFunc(); 
+	
+	//EVENT 
+	 document.write("<br /><center><b>EVENT</b></center><br />");
+	 
+	
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/digital_clock.js"></script> <!--clock-->
+<!--  Timer-->
+  <script src="assets/countdown/jquery.countdown.js"></script>
+  <script src="assets/js/script.js"></script>
+<!--  My Script-->
+  <script src="js/script.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+		$("#check_login").bind("click", function(event){
+			//alert("true");
+			$.ajax({
+				url: "login.php",
+				type: "POST",
+				data: ("log_name=" + $("#name").val()),
+				dataType: "text",
+				success: function(result){
+					$("#name").next().remove();
+					//alert(result);
+					if(result == "0") $("#name").after("<span>Enter Login!</span>");
+					else if (result == "1") $("#name").after("<span>Login busi!</span>");
+					else $("#name").after("<span> Login free!</span>");
+				}
+			});
+		});
+	});
+  </script>
+  </body>
+</html>

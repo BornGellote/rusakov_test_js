@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Test Ajax</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+	<script src="//code.jquery.com/jquery-2.2.4.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function changeData(data){	
+		
+			var element = $("#content");
+				if(element.lenght == 0) $("<p id='content'" + data + "</p>").appendTo($("body"));
+					else $("#content").text(data);
+		
+		}
+		$(document).ready(function(){
+			
+			$('#p_1').bind("click", function() {
+				$.get("send.php", {id: 1}, changeData);
+			});
+			
+			$('#p_2').bind("click", function() {
+				$.post("send.php", {id: 2}, changeData);
+			});
+		});
+	</script>
+</head>
+<body>
+	
+	<span id="p_1">Panel 1</span>
+	<span id="p_2">Panel 2</span>
+	
+	
+
+    <script type="text/javascript">
+        function  getXmlHttp() {
+            var xmlhttp;
+
+            try {
+                xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+                try {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (E) {
+                    xmlhttp = false;
+                }
+            }
+            if (!xmlhttp && typeof XMLHttpRequest != "undefined")
+                xmlhttp = new XMLHttpRequest();
+            return xmlhttp;
+        }
+       function checkLogin(login) {
+           var xmlhttp = getXmlHttp(); //Create object XMLHTTP
+           xmlhttp.open("POST", "log.php", true); //Open async conect
+		   xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlecoded"); // Send Code
+		   
+		   //xmlhttp.send("login" + encodeURIComponent(login) + "&name" + encodeURIComponent(name));
+		   xmlhttp.send("login=" + encodeURIComponent(login));
+		   xmlhttp.onreadystatechange = function() {
+				if(xmlhttp.readyState == 4) {
+					if(xmlhttp.status == 200){
+						if(xmlhttp.responseText == "error") alert("Login done");
+							else alert("Login free");
+					}
+				}
+		   }
+       }
+    </script>
+	<input class="form-control" type="text" name="login" onblur="checkLogin(this.value)" />
+</body>
+</html>

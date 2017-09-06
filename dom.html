@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DOM (Document Object Model)</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript">
+		var active = 0;
+		var links = false;
+		
+		function parseDocument() {
+			if (!links) {
+				var nodelist = document.getElementById("menu").childNodes;
+				links = new Array();
+				var k = 0;
+				for (var i = 0; i < nodelist.length; i++) {
+					if (nodelist[i] instanceof HTMLLIElement) {
+						var li = nodelist[i].childNodes;
+						for (var j = 0; j < li.length; j++) {
+							if (li[j] instanceof HTMLAnchorElement) {
+								links[k] = li[j];
+								k++;
+							}
+						}
+					}
+				}
+			}
+			for (var i = 0; i < links.length; i++) {
+				if (i == active) links[i].style.color = "red";
+				else links[i].style.color = "blue";
+			}
+			if ((active + 1) == links.length) active = 0;
+			else active++;
+			setTimeout(parseDocument, 100);
+		}
+	</script>
+</head>
+<body onload="parseDocument()">
+	<ul id="menu">
+		<li>
+			<a href="#">Ссылка 1</a>
+		</li>
+		<li>
+			<a href="#">Ссылка 2</a>
+		</li>
+		<li>
+			<a href="#">Ссылка 3</a>
+		</li>
+		<li>
+			<a href="#">Ссылка 4</a>
+		</li>
+		<li>
+			<a href="#">Ссылка 5</a>
+		</li>
+	</ul>
+</body>
+</html>
